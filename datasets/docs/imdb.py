@@ -1,7 +1,11 @@
 import os
 import pandas as pd
+from typing import TypedDict
 
-def load(type = 'dict'):
+Document = TypedDict('Document', {'id': int, 'title': str, 'year': int, 'runtime': int, 'rating': float, 'genre': str, 'actors': str, 'summary': str})
+DocumentCollection = list[Document]
+
+def load() -> DocumentCollection:
     df = pd.read_csv(os.path.join(os.path.dirname(__file__), 'imdb_top_1000.csv'))
     df.drop(['Poster_Link', 'Certificate', 'Meta_score', 'Director', 'No_of_Votes', 'Gross'], axis=1, inplace=True)
 
@@ -16,7 +20,6 @@ def load(type = 'dict'):
     # replace content
     df['runtime'].replace(to_replace=r'(\d*) min', value=r'\1', regex=True, inplace=True)
     df['genre'].replace(r',', '', regex=True, inplace=True)
-    df['summary'].replace(r'[,.!?-]', '', regex=True, inplace=True)
     df['actors'] = df[['Star1', 'Star2', 'Star3', 'Star4']].apply(lambda x: ' '.join(x), axis=1)
     df['id'] = df.index + 1
 
@@ -28,8 +31,6 @@ def load(type = 'dict'):
     df = df[['id', 'title', 'year', 'runtime', 'rating', 'genre', 'actors', 'summary']]
 
     # return dictionary
-    if type == 'dict':
-        return df.to_dict('records')
-    return df
+    return df.to_dict('records')
 
 
