@@ -21,7 +21,6 @@ def load() -> DocumentCollection:
     df['runtime'].replace(to_replace=r'(\d*) min', value=r'\1', regex=True, inplace=True)
     df['genre'].replace(r',', '', regex=True, inplace=True)
     df['actors'] = df[['Star1', 'Star2', 'Star3', 'Star4']].apply(lambda x: ' '.join(x), axis=1)
-    df['id'] = df.index + 1
 
     # convert to target type
     df['runtime'] = df['runtime'].astype(int)
