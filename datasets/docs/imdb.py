@@ -27,7 +27,7 @@ def load() -> DocumentCollection:
     df.drop(['Star1', 'Star2', 'Star3', 'Star4'], axis=1, inplace=True)
 
     # reorder columns
-    df = df[['id', 'title', 'year', 'runtime', 'rating', 'genre', 'actors', 'summary']]
+    df = df[['title', 'year', 'runtime', 'rating', 'genre', 'actors', 'summary']]
 
     # return dictionary
     return df.to_dict('records')
