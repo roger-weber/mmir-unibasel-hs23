@@ -1,0 +1,4 @@
+tabulate
+ipywidgets
+pandas
+numpy
