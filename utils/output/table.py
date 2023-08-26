@@ -3,7 +3,7 @@ from tabulate import tabulate
 from itertools import islice
 import builtins
 
-def print(rows: list[list[str]], headers: list[str], max_rows: int = 20, format: str = 'text'):
+def print(rows: list[list[str]], headers: list[str], max_rows: int = 100, format: str = 'text'):
     if not rows or not headers: return
     if format == 'text':
         builtins.print(tabulate(islice(rows, max_rows), headers, tablefmt="github"))

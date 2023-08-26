@@ -32,4 +32,29 @@ def load() -> DocumentCollection:
     # return dictionary
     return df.to_dict('records')
 
+def format(doc: dict, row: list[str] = None) -> list[str]:
+    trim = lambda s,n: len(s) > n and s[:n] + "\u2026" or s
+    row = row or []
+    row.append(str(doc.get('id', 0)))
+    row.append(trim(doc['title'], 30))
+    row.append(str(doc['year']))
+    row.append(str(doc['runtime']))
+    row.append(str(round(doc['rating'], 1)))
+    row.append(trim(doc['genre'], 20))
+    row.append(trim(doc['actors'], 30))
+    row.append(trim(doc['summary'], 100))
+    return row
 
+
+def headers(*args: str) -> list[str]:
+    headers = list(args)
+    headers.append('id')
+    headers.append('title')
+    headers.append('year')
+    headers.append('runtime')
+    headers.append('rating')
+    headers.append('genre')
+    headers.append('actors')
+    headers.append('summary')
+    return headers
+    

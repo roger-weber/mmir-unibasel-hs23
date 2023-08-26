@@ -12,16 +12,15 @@ def load(nDocs = 100, nTerms = 1) -> list[dict]:
     # create the collection
     return [{'text': ' '.join(index[doc_id - 1]) or 'fish'} for doc_id in range(1, nDocs + 1)]
 
-def format(doc: dict, doc_id: int = None, score: float = None) -> str:
-    doc_id = doc.get('id', doc_id)
-    row = []
-    if doc_id: row.append(doc_id)
-    if score: row.append(score)
+def format(doc: dict, row: list[str] = None) -> list[str]:
+    row = row or []
+    row.append(str(doc.get('id')))
     row.append(doc.get('text'))
     return row
 
 
 def headers(*args: str) -> list[str]:
     headers = list(args)
+    headers.append('id')
     headers.append('text')
     return headers
