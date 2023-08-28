@@ -1,6 +1,6 @@
 import random
 
-def load(nDocs = 100, nTerms = 1) -> list[dict]:
+def load(nDocs = 100, nTerms = 5) -> list[dict]:
     # create a set of documents with random number of terms
     terms = ['dog', 'cat', 'horse', 'rabit', 'ostrich', 'bear', 'tiger', 'lion', 'bird', 'donkey', 'bee', 'ant' , 'fly', 'wale', 'snake']
     dfs = [nDocs * max(int(80 // (i + 4) ** 0.7), 1) // 100 for i, _ in enumerate(terms)]
