@@ -8,6 +8,12 @@ We delve into classical text retrieval models, with a special emphasis on vector
   - restart jupyter notebook / VSCode
   - open notebook and select ganymede kernel
   - use `%%pom` to load 3rd party libraries
+    ```
+    %%pom
+    dependencies:
+    - org.apache.lucene:lucene-core:LATEST
+    - org.apache.lucene:lucene-queryparser:LATEST
+    ```
 
 #####Slides
 - tbd
