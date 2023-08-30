@@ -2,10 +2,10 @@
 --    document table can have additional attributes to title and year
 --    creation of auto incremented doc IDs depends on database product
 CREATE TABLE document(id SERIAL PRIMARY KEY, title TEXT, year INTEGER)
-CREATE TABLE vocabulary(term TEXT, df INTEGER, idf REAL)
+CREATE TABLE vocabulary(term TEXT PRIMARY KEY, df INTEGER, idf REAL)
 CREATE TABLE posting(term TEXT, docId INTEGER, tf INTEGER)
 CREATE TEMPORARY TABLE query(term TEXT, tf INTEGER)
-
+CREATE INDEX inverted_list ON posting(term)
 
 -- 2. rebuild index from documents
 --    delete all existing data
@@ -61,7 +61,7 @@ INSERT INTO query(term, tf) VALUES(:term, 1)
     FROM document d, posting p, query q 
    WHERE p.term = q.term AND
          p.docId = d.id
-GROUP BY d.id
+GROUP BY p.docId
   HAVING COUNT(p.term) = (SELECT COUNT(*) FROM query)
 
 --    OR(:term1, :term2, ...)
@@ -69,8 +69,7 @@ GROUP BY d.id
     FROM document d, posting p, query q 
    WHERE p.term = q.term AND
          p.docId = d.id
-GROUP BY d.id
-  HAVING COUNT(p.term) > 0
+GROUP BY p.docId
 
 
 -- 7. vector space model with dot product
@@ -84,7 +83,7 @@ INSERT INTO query(term, tf) VALUES(:term,:tf)
      WHERE p.term = q.term AND
          p.term = v.term AND
          p.docId = d.id
-GROUP BY d.id
+GROUP BY p.docId
 ORDER BY 1 DESC
 
 
@@ -96,5 +95,5 @@ ORDER BY 1 DESC
          p.term = v.term AND
          p.docId = d.id AND
          d.year > 1990
-GROUP BY d.id
+GROUP BY p.docId
 ORDER BY 1 DESC

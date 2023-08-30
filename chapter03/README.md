@@ -12,6 +12,7 @@ We delve into classical text retrieval models, with a special emphasis on vector
     %%pom
     dependencies:
     - org.apache.lucene:lucene-core:LATEST
+    - org.apache.lucene:lucene-analyzers-common:LATEST
     - org.apache.lucene:lucene-queryparser:LATEST
     ```
 

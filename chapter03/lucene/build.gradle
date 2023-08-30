@@ -24,7 +24,6 @@ dependencies {
     // This dependency is used by the application.
     implementation group: 'org.apache.lucene', name: 'lucene-core', version: '4.0.0'
     implementation group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '4.0.0'
-    implementation group: 'org.apache.lucene', name: 'lucene-codecs', version: '4.0.0'
     implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '4.0.0'
 
     // Use JUnit test framework
