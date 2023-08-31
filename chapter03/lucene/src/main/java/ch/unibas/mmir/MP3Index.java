@@ -3,7 +3,6 @@
  */
 package ch.unibas.mmir.lucene;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import javax.management.Query;
 import javax.swing.text.Document;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -31,11 +30,9 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-
 // ──────────── indexing MP3 files ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 public class MP3Index {
-
 
   static public void main(String args[]) {
 
@@ -46,7 +43,8 @@ public class MP3Index {
       do {
         System.out.print("query> ");
         String queryStr = in.readLine();
-        if (queryStr.isEmpty()) break;
+        if (queryStr.isEmpty())
+          break;
         index.search(queryStr);
       } while (true);
     } catch (Throwable ex) {
@@ -54,14 +52,14 @@ public class MP3Index {
     }
   }
 
-
-  // ──────────── indexer ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // ──────────── indexer
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
   private Directory directory;
   private StandardAnalyzer analyzer;
 
   public MP3Index() throws IOException {
-//    directory = new RAMDirectory(); ByteBuffersDirectory replaced RAMDirectory()
+    // directory = new RAMDirectory(); ByteBuffersDirectory replaced RAMDirectory()
     directory = FSDirectory.open(Paths.get("./index"));
     analyzer = new StandardAnalyzer();
 
@@ -80,43 +78,44 @@ public class MP3Index {
   }
 
   private Document newDocFromFilename(final String name) {
-    Document doc=new Document();
+    Document doc = new Document();
     String[] elms = name.split("\\\\");
 
     // format of name is: c:\MyMP3s\ABBA\Voulez-Vous\09_Abba_Lovers.mp3
-    doc.add(new StringField("filename",name,Field.Store.YES));
-    doc.add(new TextField("content",name.replace(".mp3", ""),Field.Store.NO));
-    if(elms.length==5) { //only if format matches above structure
-      doc.add(new StringField("artist",elms[2],Field.Store.YES));
-      doc.add(new StringField("album",elms[3],Field.Store.YES));
-      doc.add(new StringField("title",elms[4].replace(".mp3", ""),Field.Store.YES));
+    doc.add(new StringField("filename", name, Field.Store.YES));
+    doc.add(new TextField("content", name.replace(".mp3", ""), Field.Store.NO));
+    if (elms.length == 5) { // only if format matches above structure
+      doc.add(new StringField("artist", elms[2], Field.Store.YES));
+      doc.add(new StringField("album", elms[3], Field.Store.YES));
+      doc.add(new StringField("title", elms[4].replace(".mp3", ""), Field.Store.YES));
     }
     return doc;
   }
 
   private void indexMP3Files() throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader("MP3Songs.txt"));
-    IndexWriter writer=getIndexWriter();
+    IndexWriter writer = getIndexWriter();
     String name;
 
     while (null != (name = reader.readLine())) {
-      Document doc=newDocFromFilename(name);
-      if(doc!=null) writer.addDocument(doc);
+      Document doc = newDocFromFilename(name);
+      if (doc != null)
+        writer.addDocument(doc);
     }
     writer.close();
   }
 
   private void search(String queryStr) throws IOException, ParseException {
-    IndexSearcher searcher=getIndexSearcher();
-    QueryParser parser=new QueryParser("content", analyzer);
+    IndexSearcher searcher = getIndexSearcher();
+    QueryParser parser = new QueryParser("content", analyzer);
     Query query = parser.parse(queryStr);
     TopDocs hits = searcher.search(query, 20);
 
-    System.out.printf("Found %d documents for query '%s'\n",hits.totalHits.value,queryStr);
+    System.out.printf("Found %d documents for query '%s'\n", hits.totalHits.value, queryStr);
 
-    for(int i=0;i<hits.scoreDocs.length;i++){
+    for (int i = 0; i < hits.scoreDocs.length; i++) {
       Document doc = searcher.doc(hits.scoreDocs[i].doc);
-      System.out.printf("  %4d %1.3f  %s\n",i+1,hits.scoreDocs[i].score,doc.get("filename"));
+      System.out.printf("  %4d %1.3f  %s\n", i + 1, hits.scoreDocs[i].score, doc.get("filename"));
     }
   }
 }
