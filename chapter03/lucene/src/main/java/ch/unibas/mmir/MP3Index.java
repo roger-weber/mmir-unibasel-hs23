@@ -5,32 +5,31 @@ package ch.unibas.mmir.lucene;
 
 
 import java.io.BufferedReader;
-import java.nio.file.Paths;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.management.Query;
+import javax.swing.text.Document;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
-import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 
 
 // ──────────── indexing MP3 files ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -39,6 +38,7 @@ public class MP3Index {
 
 
   static public void main(String args[]) {
+
     try {
       MP3Index index = new MP3Index();
       BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -64,6 +64,8 @@ public class MP3Index {
 //    directory = new RAMDirectory(); ByteBuffersDirectory replaced RAMDirectory()
     directory = FSDirectory.open(Paths.get("./index"));
     analyzer = new StandardAnalyzer();
+
+    TokenStream ts = analyzer.tokenStream("text", new StringReader("test"));
   }
 
   private IndexWriter getIndexWriter() throws IOException {
