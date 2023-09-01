@@ -4,7 +4,7 @@ We delve into classical text retrieval models, with a special emphasis on vector
 ##### Installations
 - [Ganymede](https://github.com/allen-ball/ganymede)
   - download the jar `ganymede-nnn.jar`
-  - install the new kernel `java -jar ganymede-2.1.1.20221231.jar -i`
+  - install the new kernel `java -jar ganymede-nnn.jar -i`
   - restart jupyter notebook / VSCode
   - open notebook and select ganymede kernel
   - use `%%pom` to load 3rd party libraries
