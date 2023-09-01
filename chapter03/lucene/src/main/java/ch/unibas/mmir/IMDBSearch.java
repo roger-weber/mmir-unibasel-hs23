@@ -23,6 +23,8 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 public class IMDBSearch {
 
+    private static final String fileImdbDataset = "../datasets/imdb_top_1000.csv";
+
     // loading IMDB documents
     // ----------------------------------------------------------------------------------------
     public static ArrayList<Map<String, String>> read_collection(String name) throws IOException {
@@ -54,7 +56,7 @@ public class IMDBSearch {
                         dataMap.put("rating", values[i]);
                         break;
                     case "Overview":
-                        dataMap.put("summary", values[i]);
+                        dataMap.put("summary", values[i].replace("\"", ""));
                         break;
                     case "Star1":
                         dataMap.put("actors", values[i]);
@@ -75,8 +77,16 @@ public class IMDBSearch {
         return docs;
     }
 
+    static public void show_imdb_data() throws IOException {
+        ArrayList<Map<String,String>> collection = read_collection(fileImdbDataset);
+        System.out.println("\nfirst document:");
+        collection.get(0).forEach((key, value) -> System.out.println(String.format("%10s: %s", key, value)));
+    }
+
     // analyzer demo
     // ----------------------------------------------------------------------------------------
+
+    public static final Analyzeranalyzer = new EnglishAnalyzer();
 
     public static class MyAnalyzer extends Analyzer {
         @Override
@@ -129,6 +139,19 @@ public class IMDBSearch {
         // a custom analyzer, no lower case and kstemmer
         System.out.print("      my analyzer: ");
         print_tokens(new MyAnalyzer(), text);
+            
+        // print standard stop word list
+        System.out.println("\nenglish stopword list:");
+        System.out.println(EnglishAnalyzer.getDefaultStopSet());
+    }
+
+    // build index
+    // ----------------------------------------------------------------------------------------
+
+    public static void load_batch(ArrayList<Map<String, String>> docs) {
+        docs.forEach(
+            
+        )
     }
 
     // main function and demo dispatcher
@@ -138,11 +161,15 @@ public class IMDBSearch {
         // check on arguments and run parts of demo
         String action = args.length > 0 ? args[0].toLowerCase() : "analyze";
 
-        // if action starts with "ana", run analyzer example
+        // trigger action on first 3 letter
         if (action.startsWith("ana")) {
             System.out.println("IMDBSearch: running analyzer example");
             System.out.println();
             run_analyzer_example();
+        } else if (action.startsWith("sho")) {
+            System.out.println("IMDBSearch: show imdb data");
+            System.out.println();
+            show_imdb_data();
         } else
             System.out.println("IMDBSearch: unknown action `" + action + "`");
         System.out.println();
