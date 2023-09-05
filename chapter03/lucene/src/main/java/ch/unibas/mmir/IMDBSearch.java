@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
@@ -20,15 +23,25 @@ import org.apache.lucene.analysis.en.KStemFilter;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.FloatField;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 public class IMDBSearch {
 
     private static final String fileImdbDataset = "../datasets/imdb_top_1000.csv";
+    private static final String pathIndex = "./index";
 
     // loading IMDB documents
     // ----------------------------------------------------------------------------------------
-    public static ArrayList<Map<String, String>> read_collection(String name) throws IOException {
-        ArrayList<Map<String, String>> docs = new ArrayList<Map<String, String>>();
+    public static List<Map<String, String>> readCollection(String name) throws IOException {
+        List<Map<String, String>> docs = new ArrayList<Map<String, String>>();
         String splitter = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
         BufferedReader reader = new BufferedReader(new FileReader(name));
         String line, keys[] = reader.readLine().split(splitter);
@@ -77,8 +90,8 @@ public class IMDBSearch {
         return docs;
     }
 
-    static public void show_imdb_data() throws IOException {
-        ArrayList<Map<String,String>> collection = read_collection(fileImdbDataset);
+    static public void showImdbData() throws IOException {
+        List<Map<String, String>> collection = readCollection(fileImdbDataset);
         System.out.println("\nfirst document:");
         collection.get(0).forEach((key, value) -> System.out.println(String.format("%10s: %s", key, value)));
     }
@@ -86,7 +99,9 @@ public class IMDBSearch {
     // analyzer demo
     // ----------------------------------------------------------------------------------------
 
-    public static final Analyzeranalyzer = new EnglishAnalyzer();
+    public static Analyzer getAnalyzer() {
+        return new EnglishAnalyzer();
+    }
 
     public static class MyAnalyzer extends Analyzer {
         @Override
@@ -107,7 +122,7 @@ public class IMDBSearch {
         }
     }
 
-    public static void print_tokens(Analyzer analyzer, String text) throws IOException {
+    public static void printTokens(Analyzer analyzer, String text) throws IOException {
         TokenStream ts = analyzer.tokenStream("text", new StringReader(text));
         CharTermAttribute termAtt = ts.addAttribute(CharTermAttribute.class);
 
@@ -117,7 +132,7 @@ public class IMDBSearch {
         System.out.println();
     }
 
-    public static void run_analyzer_example() throws IOException {
+    public static void runAnalyzerExample() throws IOException {
         String text = "I think text's values' color goes here; WHAT happens with it? do we see IT again; I went there to be gone with houses";
         CharArraySet stopWords = new CharArraySet(Arrays.asList("i", "do"), true);
 
@@ -126,20 +141,20 @@ public class IMDBSearch {
 
         // standard analyzer
         System.out.print("         standard: ");
-        print_tokens(new StandardAnalyzer(), text);
+        printTokens(new StandardAnalyzer(), text);
 
         // english analyzer (with porter stemmer)
         System.out.print("          english: ");
-        print_tokens(new EnglishAnalyzer(), text);
+        printTokens(new EnglishAnalyzer(), text);
 
         // english analyzer (with porter stemmer) and new set of stopwords
         System.out.print("english/stopwords: ");
-        print_tokens(new EnglishAnalyzer(stopWords), text);
+        printTokens(new EnglishAnalyzer(stopWords), text);
 
         // a custom analyzer, no lower case and kstemmer
         System.out.print("      my analyzer: ");
-        print_tokens(new MyAnalyzer(), text);
-            
+        printTokens(new MyAnalyzer(), text);
+
         // print standard stop word list
         System.out.println("\nenglish stopword list:");
         System.out.println(EnglishAnalyzer.getDefaultStopSet());
@@ -148,10 +163,55 @@ public class IMDBSearch {
     // build index
     // ----------------------------------------------------------------------------------------
 
-    public static void load_batch(ArrayList<Map<String, String>> docs) {
-        docs.forEach(
-            
-        )
+    public static Directory getDirectory() throws IOException {
+        return FSDirectory.open(Paths.get(pathIndex));
+    }
+
+    public static IndexWriter getIndexWriter() throws IOException {
+        Directory directory = getDirectory();
+        IndexWriterConfig config = new IndexWriterConfig(getAnalyzer());
+        return new IndexWriter(directory, config);
+    }
+
+    public static void deleteIndex() throws IOException {
+        IndexWriter writer = getIndexWriter();
+        writer.deleteAll();
+        writer.commit();
+        writer.close();
+    }
+
+    public static Document createDocument(Map<String, String> data) {
+        Document doc = new Document();
+
+        // we store everything we need for result presentation
+        doc.add(new TextField("title", data.get("title"), Field.Store.YES));
+        doc.add(new IntField("year", Integer.parseInt(data.get("year")), Field.Store.YES));
+        doc.add(new IntField("runtime", Integer.parseInt(data.get("runtime")), Field.Store.YES));
+        doc.add(new FloatField("rating", Float.parseFloat(data.get("rating")), Field.Store.YES));
+
+        // we do not store these fields and can't print them in the results
+        doc.add(new TextField("actors", data.get("actors"), Field.Store.NO));
+        doc.add(new TextField("genre", data.get("genre"), Field.Store.NO));
+        doc.add(new TextField("summary", data.get("summary"), Field.Store.NO));
+
+        return doc;
+    }
+
+    public static void loadBatch(List<Map<String, String>> docs) throws IOException {
+        IndexWriter writer = getIndexWriter();
+
+        for (Map<String, String> doc : docs)
+            writer.addDocument(createDocument(doc));
+        writer.close();
+    }
+
+    public static void loadImdbData(int batchSize) throws IOException {
+        List<Map<String, String>> collection = readCollection(fileImdbDataset);
+
+        deleteIndex();
+        // load collection in batches do show how segments work
+        for (int i = 0; i < collection.size(); i += batchSize)
+            loadBatch(collection.subList(i, Math.min(i + batchSize, collection.size())));
     }
 
     // main function and demo dispatcher
@@ -165,11 +225,16 @@ public class IMDBSearch {
         if (action.startsWith("ana")) {
             System.out.println("IMDBSearch: running analyzer example");
             System.out.println();
-            run_analyzer_example();
+            runAnalyzerExample();
         } else if (action.startsWith("sho")) {
             System.out.println("IMDBSearch: show imdb data");
             System.out.println();
-            show_imdb_data();
+            showImdbData();
+        } else if (action.startsWith("loa")) {
+            int batchSize = args.length > 1 ? Integer.parseInt(args[1]) : 100;
+            System.out.println("IMDBSearch: load imdb data with batch size " + batchSize);
+            System.out.println();
+            loadImdbData(batchSize);
         } else
             System.out.println("IMDBSearch: unknown action `" + action + "`");
         System.out.println();
