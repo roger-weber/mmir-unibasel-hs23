@@ -3,6 +3,10 @@
 We delve into classical text retrieval models, with a special emphasis on vector space retrieval. Additionally, we explore Lucene, OpenSearch, and Elasticsearch, showcasing the capabilities of these models.
 
 ## Installations
+- install require python dependencies
+  ```
+    pip install -r requirements.txt
+  ```
 
 - [Ganymede](https://github.com/allen-ball/ganymede)
   - download the jar `ganymede-nnn.jar`
