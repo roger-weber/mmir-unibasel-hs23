@@ -1,1 +1,4 @@
-gutenberg
+beautifulsoup4
+unidecode
+nltk
+
