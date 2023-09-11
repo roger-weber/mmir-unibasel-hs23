@@ -8,3 +8,4 @@ seaborn
 matplotlib
 tabulate
 spacy
+spacy[cuda113]
