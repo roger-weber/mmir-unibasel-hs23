@@ -6,3 +6,5 @@ tokenizers
 transformers
 seaborn
 matplotlib
+tabulate
+spacy
