@@ -29,7 +29,7 @@ Examining natural language processing using NLTK as an example, this chapter als
 
 ## Demos
 
-- tbd
+- [Embeddings Projector](https://projector.tensorflow.org)
 
 ## Links
 
