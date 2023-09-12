@@ -9,3 +9,4 @@ matplotlib
 tabulate
 spacy
 spacy[cuda113]
+sentence_transformers
