@@ -16,26 +16,29 @@ def load_text(book_id: int) -> str:
     END_MARKERS = ['*** END OF']
 
     def _download(url: str) -> str:
-        print(f'loading text from {url}')
-        with urlopen(url) as response:
-            text = []
-            # ignore lines up to start markers
-            for line in response:
-                line = line.decode("utf-8-sig").strip()
-                if any(line.startswith(token) for token in START_MARKERS):
-                    break
-            # add all lines up to end markers
-            for line in response:
-                line = line.decode("utf-8-sig").strip()
-                if any(line.startswith(token) for token in END_MARKERS):
-                    break
-                text.append(line)
-        return '\n'.join(text).strip()
-
-    try:
-        return _download(f'https://www.gutenberg.org/files/{book_id}/{book_id}-0.txt')
-    except:
-        return _download(f'https://www.gutenberg.org/cache/epub/{book_id}/pg{book_id}.txt')
+        try:
+            print(f'loading text from {url}')
+            with urlopen(url) as response:
+                text = []
+                # ignore lines up to start markers
+                for line in response:
+                    line = line.decode("utf-8-sig").strip()
+                    if any(line.startswith(token) for token in START_MARKERS):
+                        break
+                # add all lines up to end markers
+                for line in response:
+                    line = line.decode("utf-8-sig").strip()
+                    if any(line.startswith(token) for token in END_MARKERS):
+                        break
+                    text.append(line)
+            return '\n'.join(text).strip()
+        except:
+            return None
+    return  _download(f'http://aleph.gutenberg.org/{"/".join(str(book_id)[:-1])}/{book_id}/{book_id}.txt') or \
+            _download(f'http://aleph.gutenberg.org/{"/".join(str(book_id)[:-1])}/{book_id}/{book_id}-0.txt') or \
+            _download(f'https://www.gutenberg.org/files/{book_id}/{book_id}-0.txt') or \
+            _download(f'https://www.gutenberg.org/files/{book_id}/{book_id}.txt') or \
+            _download(f'https://www.gutenberg.org/cache/epub/{book_id}/pg{book_id}.txt')
 
 def from_cache(book_id: int) -> str:
     """
