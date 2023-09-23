@@ -38,7 +38,7 @@ Here are a few links to get us ready for the course.
       ```bash
         python -m venv .venv
 
-        windows> .venv\Scripts\activate
+        windows> .venv\scripts\activate
         macOS> source .venv/bin/activate
       ```
 
@@ -140,6 +140,7 @@ Here are a few links to get us ready for the course.
 - [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
 - [Python Documentation](https://docs.python.org/3/index.html)
 - [Quickstart with Python](https://docs.python.org/3/tutorial/index.html)
+- [Python for Data Scientist](https://khuyentran1401.github.io/Efficient_Python_tricks_and_tools_for_data_scientists/README.html)
 - [Python Cheat Sheets](https://www.pythoncheatsheet.org/)
 
 ## Links
