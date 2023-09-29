@@ -12,3 +12,4 @@ spacy[cuda113]
 sentence_transformers
 gensim
 jieba
+svgling
