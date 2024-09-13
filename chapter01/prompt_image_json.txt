@@ -1,0 +1,28 @@
+Analyze the given image and provide a JSON output with the following information:
+
+{
+  "headline": "A brief, catchy title summarizing the main subject or theme of the image",
+  "keywords": ["List", "of", "relevant", "keywords", "describing", "the", "image", "content"],
+  "named_entities": ["List", "of", "identified", "people", "places", "organizations", "or", "products"],
+  "dominant_colors": ["List", "of", "primary", "colors", "present", "in", "the", "image"],
+  "dominant_forms_shapes": ["List", "of", "main", "geometric", "shapes", "or", "forms", "observed"],
+  "extracted_text": "Any text visible in the image, if present",
+  "people_present": true/false,
+  "is_selfie": true/false,
+  "is_outdoors": true/false,
+  "is_text_image": true/false
+}
+
+Please ensure that:
+1. The "headline" is concise and accurately represents the image's main subject.
+2. "keywords" include relevant terms describing the image's content, style, and context.
+3. "named_entities" list any recognizable people, places, brands, or organizations.
+4. "dominant_colors" list the most prominent colors in the image.
+5. "dominant_forms_shapes" describe the main geometric shapes or forms observed.
+6. "extracted_text" contains any visible text in the image, if applicable.
+7. "people_present" is set to true if any human figures are visible in the image.
+8. "is_selfie" is set to true if the image appears to be a self-taken photograph.
+9. "is_outdoors" is set to true if the image depicts an outdoor scene.
+10. "is_text_image" is set to true if the image primarily consists of text (e.g., a screenshot of text).
+
+Provide the JSON output based on your analysis of the image.

@@ -1,0 +1,17 @@
+"Describe the image in such detailed terms that a painter could precisely recreate it. Include the following:
+
+1. The **subject**: Describe the main elements of the scene, including objects, people, and any relevant actions. Specify their positions, facial expressions, body language, and interactions.
+   
+2. **Lighting and shadows**: Describe the direction and quality of light, shadows, and reflections. Note whether the lighting is natural, artificial, warm, cool, soft, or harsh.
+
+3. **Color palette**: Include the specific colors and shades visible in the image, describing the dominant tones and subtle variations. Detail the way these colors interact with light and shadow.
+
+4. **Textures**: Describe the texture of surfaces—such as skin, fabric, metal, and wood—and how these textures affect the way light reflects off them.
+
+5. **Perspective and scale**: Note the camera’s perspective, whether it is wide-angle, close-up, eye-level, or another viewpoint. Also describe the size and relative scale of objects within the scene.
+
+6. **Background and environment**: Describe the setting and environment, including details such as weather, time of day, architectural features, landscape, or other elements that set the scene.
+
+7. **Mood and atmosphere**: Capture the overall feeling of the image, explaining how the combination of lighting, color, subject, and environment evoke a certain mood, emotion, or atmosphere.
+
+Make sure the description is detailed enough that even someone without seeing the image could paint an accurate reproduction."

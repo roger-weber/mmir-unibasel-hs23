@@ -1,0 +1,7 @@
+tabulate
+ipywidgets
+pandas
+numpy
+boto3
+opencv-python
+scikit-image
