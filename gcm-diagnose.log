@@ -1,0 +1,175 @@
+﻿Diagnose log at 2024-09-13T07:47:02Z
+
+AppPath: /usr/local/bin/git-credential-manager
+InstallDir: /usr/local/share/gcm-core/
+Version: 2.5.1+90d5f897f164a8fe07d2aa3bf7db439b0b4e03ea
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: macOS
+OSVersion: 14.6.1
+Reading environment variables... OK
+ Variables:
+TMPDIR=/var/folders/qq/r7f7lf750n57yz89ypwh97mh0000gr/T/
+SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.54uImoraD6/Listeners
+HOMEBREW_REPOSITORY=/opt/homebrew
+__CF_USER_TEXT_ENCODING=0x1F8:0x0:0x0
+INFOPATH=/opt/homebrew/share/info:/opt/homebrew/share/info:
+HOME=/Users/drweb
+SECURITYSESSIONID=186b2
+HOMEBREW_PREFIX=/opt/homebrew
+AWS_PROFILE=default
+ORIGINAL_XDG_CURRENT_DESKTOP=undefined
+VSCODE_GIT_ASKPASS_MAIN=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js
+USER_ZDOTDIR=/Users/drweb
+LaunchInstanceID=20FC1F1E-C6DE-41BD-AC22-77B3C3995FD2
+XPC_FLAGS=0x0
+ZDOTDIR=/Users/drweb
+HOMEBREW_CELLAR=/opt/homebrew/Cellar
+SHLVL=1
+LOGNAME=drweb
+TERM=xterm-256color
+PATH=/opt/homebrew/opt/git/libexec/git-core:.:/Users/drweb/bin:/opt/homebrew/lib/ruby/gems/3.2.0/gems/cfn-nag-0.8.10/bin:/usr/local/aws-cli:/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/node@18/bin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:.:/Users/drweb/bin:/opt/homebrew/lib/ruby/gems/3.2.0/gems/cfn-nag-0.8.10/bin:/usr/local/aws-cli:/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/node@18/bin:/opt/homebrew/opt/ruby/bin:/Users/drweb/.local/bin
+VSCODE_GIT_IPC_HANDLE=/var/folders/qq/r7f7lf750n57yz89ypwh97mh0000gr/T/vscode-git-08d573be77.sock
+VSCODE_GIT_ASKPASS_NODE=/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)
+EDITOR=code
+COMMAND_MODE=unix2003
+OLDPWD=/Users/drweb/projects
+MANPATH=:/usr/share/man:/usr/local/share/man:/opt/homebrew/share/man:
+SHELL_PID=51797
+GIT_EXEC_PATH=/opt/homebrew/opt/git/libexec/git-core
+PWD=/Users/drweb/projects/mmir-unibasel
+XPC_SERVICE_NAME=0
+VSCODE_INJECTION=1
+TERM_PROGRAM=vscode
+GIT_ASKPASS=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+GIT_TRACE2_PARENT_SID=37784f3e-93ff-4610-a6f6-b0a45001630a
+CW_NEW_SESSION=1
+LANG=en_US.UTF-8
+QTERM_SESSION_ID=2db2ba26bdd543caa12ecab6ae57fc73
+USER=drweb
+__CFBundleIdentifier=com.microsoft.VSCode
+Q_TERM=1.4.2
+MallocNanoZone=0
+SHELL=/bin/zsh
+AWS_CURRENT_PROFILE=default
+__GIT_DIRTY=
+_=/opt/homebrew/bin/git
+COLORTERM=truecolor
+TTY=/dev/ttys013
+Q_SET_PARENT_CHECK=1
+TERM_PROGRAM_VERSION=1.87.2
+VSCODE_NONCE=6b28f47e-9493-4226-9f6c-58a1255a0785
+FIG_NEW_SESSION=1
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is '/var/folders/qq/r7f7lf750n57yz89ypwh97mh0000gr/T/'...
+Checking basic file I/O...
+Writing to temporary file '/var/folders/qq/r7f7lf750n57yz89ypwh97mh0000gr/T/67ea42a685aedd373970dfd1'... OK
+Reading from temporary file '/var/folders/qq/r7f7lf750n57yz89ypwh97mh0000gr/T/67ea42a685aedd373970dfd1'... OK
+Deleting temporary file '/var/folders/qq/r7f7lf750n57yz89ypwh97mh0000gr/T/67ea42a685aedd373970dfd1'... OK
+Testing IFileSystem instance...
+UserHomePath: /Users/drweb
+UserDataDirectoryPath: /Users/drweb/.gcm
+GetCurrentDirectory(): /Users/drweb/projects/mmir-unibasel
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com...Sending HEAD request to https://example.com... OK
+ OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:52790/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.44.0'
+Locating current repository...Git repository at '/Users/drweb/projects/mmir-unibasel/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:/Users/drweb/.gitconfig	init.defaultbranch=main
+file:/Users/drweb/.gitconfig	user.name=Roger Weber
+file:/Users/drweb/.gitconfig	user.email=drweb@amazon.com
+file:/Users/drweb/.gitconfig	credential.helper=osxkeychain
+file:/Users/drweb/.gitconfig	credential.usehttppath=true
+file:/Users/drweb/.gitconfig	credential.helper=
+file:/Users/drweb/.gitconfig	credential.helper=/usr/local/share/gcm-core/git-credential-manager
+file:/Users/drweb/.gitconfig	core.excludesfile=/Users/drweb/.gitignore_global
+file:/Users/drweb/.gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=true
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.ignorecase=true
+file:.git/config	core.precomposeunicode=true
+file:.git/config	remote.origin.url=https://github.com/roger-weber/mmir-unibasel.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config	branch.main.remote=origin
+file:.git/config	branch.main.merge=refs/heads/main
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Flow type is: Auto
+Gathering MSAL token cache data... OK
+CacheDirectory: /Users/drweb/.local/.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: /Users/drweb/.local/.IdentityService/msal.cache
+MacKeyChainAccountName: MSALCache
+MacKeyChainServiceName: Microsoft.Developer.IdentityService
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
+------------
+Diagnostic: GitHub API
+Skipped: False
+Success: True
+Exception: None
+Log:
+Using 'https://github.com/' as API target.
+Querying '/meta' endpoint... OK
+
