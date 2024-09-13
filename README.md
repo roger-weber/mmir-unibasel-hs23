@@ -3,6 +3,7 @@
 This overview provides a summary of the content covered in the Multimedia Retrieval course at the University of Basel. You can find the course material here:
   - [Course in 2022](https://dmi.unibas.ch/de/studium/computer-science-informatik/lehrangebot-hs22/lecture-multimedia-retrieval/)
   - [Course in 2023](https://dmi.unibas.ch/de/studium/computer-science-informatik/lehrangebot-hs23/15731-lecture-multimedia-retrieval/)
+  - [Course in 2024](https://dmi.unibas.ch/de/studium/computer-science-informatik/lehrangebot-hs24/15731-lecture-multimedia-retrieval/)
 
 
 Table of contents:
