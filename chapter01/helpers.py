@@ -3,7 +3,6 @@ import json
 import base64
 import os
 import time
-import requests
 
 session = boto3.Session(profile_name='default', region_name='us-east-1')
 bedrock_client = session.client('bedrock', region_name='us-west-2')
