@@ -2,11 +2,19 @@ import boto3
 import json
 import base64
 import os
-import time
+import requests
 
-session = boto3.Session(profile_name='default', region_name='us-east-1')
-bedrock_client = session.client('bedrock', region_name='us-west-2')
-bedrock_runtime_client = session.client('bedrock-runtime', region_name='us-west-2')
+class AWSConnectionError(Exception):
+    """Custom exception for AWS connection issues"""
+    pass
+
+try:
+    session = boto3.Session(profile_name='default', region_name='us-east-1')
+    bedrock_client = session.client('bedrock', region_name='us-west-2')
+    bedrock_runtime_client = session.client('bedrock-runtime', region_name='us-west-2')
+except Exception as e:
+    raise AWSConnectionError('No valid AWS credentials found') from None
+
 
 MODEL_ID = 'anthropic.claude-3-5-sonnet-20240620-v1:0'
 
@@ -143,6 +151,8 @@ class Prompts:
 
 
 image_prompts = Prompts('image')
+text_prompts = Prompts('text')
+
 
 def create_image_description(image, prompt):
     return invoke_model_claude(anthropic_message_body(
@@ -209,5 +219,13 @@ def s3_download_location(s3loc):
 
 def summarize_text(text):
     return invoke_model_claude(anthropic_message_body(
-        "Summarize the following text:\n\n" + text
+        text,
+        system=text_prompts.get('summarize')
+    ))
+
+
+def keywords_text(text):
+    return invoke_model_claude(anthropic_message_body(
+        text,
+        system=text_prompts.get('keywords')
     ))
